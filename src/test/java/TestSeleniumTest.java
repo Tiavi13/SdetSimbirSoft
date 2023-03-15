@@ -1,12 +1,12 @@
 import dev.failsafe.internal.util.Assert;
-import org.asynchttpclient.util.Assertions;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
-public class TestSelenium {
+import static org.junit.jupiter.api.Assertions.*;
+
+class TestSeleniumTest {
     public static void main(String[] args) {
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
@@ -22,15 +22,10 @@ public class TestSelenium {
         driver.findElement(By.xpath("//input[@name='postalCode']")).sendKeys("test");
         driver.findElement(By.name("continue")).click();
         driver.findElement(By.id("finish")).click();
-
-
-
-        }
-
-
+        String actualUrl = driver.getCurrentUrl();
+        String expectedUrl = "https://www.saucedemo.com/checkout-complete.html";
+        assertEquals(expectedUrl, actualUrl);
+        assertTrue(driver.getPageSource().contains("Thank you for your order!"));
+        driver.close();
     }
-
-
-
-
-
+}
